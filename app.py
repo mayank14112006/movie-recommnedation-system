@@ -17,7 +17,11 @@ def fetch_poster(movie_id):
         return "https://via.placeholder.com/500x750?text=No+Image"
 
 
-similarity=pickle.load(open('similarity.pkl','rb'))
+import gzip
+
+with gzip.open('similarity_compressed.pkl.gz', 'rb') as f:
+    similarity = pickle.load(f)
+
 def recommend(movie):
     index = movies[movies['title'] == movie].index[0]
     distances = sorted(list(enumerate(similarity[index])),reverse=True,key = lambda x: x[1])
